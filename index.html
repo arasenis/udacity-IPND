@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% autoescape true %}
+
+    {% for greeting in greetings %}
+      {% if greeting.author %}
+        <b>{{ greeting.author.email }}
+          {% if user and user.user_id() == greeting.author.identity %}
+            
+          {% endif %}
+        </b><b style="background-color: #696969; color: #FAF0E6; display: inline-block; padding: 4px; 
+        }"> Wrote:</b><br>
+        <h3 style="background-color: #00FF00; color: #FFFFFF; display: inline-block; padding: 4px; 
+        }">Your Note's List</h3>
+      {% else %}
+     
+       <h3 style="background-color: #113197; color: #0CA58B; display: inline-block; padding: 4px; 
+        }">Guest Note's List</h3>
+      {% endif %}
+      <blockquote>{{ greeting.content }}</blockquote>
+    {% endfor %}
+    <b style="color: #B52020">{{ error }}</b></style>
+    <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
+      <div><textarea style="color: red; background-color: yellow" name="content" rows="10" cols="100"></textarea></div>
+      <div><input type="submit" value="Add Notes"></div>
+    </form>
+
+    <hr>
+
+    <form><h4 style="background-color: #8cc63f; color: #eceeff; display: inline-block; padding: 4px; 
+        }">Guest-User Name:</h4>
+      <input value="{{ guestbook_name }}" name="guestbook_name">
+      <input type="submit" value="Switch">
+    </form>
+
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+
+{% endautoescape %}
+{% endblock %}
